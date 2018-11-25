@@ -2,8 +2,8 @@
 layout: post
 title: "Union-Find Algorithm"
 author: "Jaeik Lee"
+categories: [Algorithm]
 tags: [algorithm, union, find, union-find]
-desc: union-find description
 ---
 
 # Union-Find Algorithm

@@ -1,7 +1,7 @@
 # Site settings
 title:          "Jacks"
 description:    "For saving S/W knowledge"
-url:            "https://chesterhow.github.io"
+url:            "https://jaeik92.lee.github.io"
 
 # Google Analytics
 google_analytics: UA—XXXXXXXX-X
@@ -46,3 +46,4 @@ paginate:     5
 plugins:
   - jekyll-paginate
   - jekyll-remote-theme
+  
