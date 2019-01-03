@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Union-Find Algorithm"
-author: "Jaeik Lee"
+title: '[Algorithm] Union-Find Algorithm'
+author: 'Jaeik Lee'
 categories: [Algorithm]
 tags: [algorithm, union, find, union-find]
 ---
@@ -11,18 +11,20 @@ tags: [algorithm, union, find, union-find]
 ---
 
 ## **Union-Find 란 ?**
+
 ```
 # 공통 원소가 없는, "상호 배타적" 부분 집합을 저장하는 자료 구조
 # Union(합치기), Find(찾기) 연산을 지원해야하기 떄문에 Union-Find Algorithm이라 불림
 # 서로소 집합(Disjoint Set), 병합 찾기 집합(Merge Find Set) 이라고도 불린다.
 
-# Union 연산    : 두 원소 a, b가 주어질 때, 이들이 속한 두 집합을 하나로 합친다.  
+# Union 연산    : 두 원소 a, b가 주어질 때, 이들이 속한 두 집합을 하나로 합친다.
 # Find 연산     : 어떤 원소 a가 주어질 때, 이 원소가 속한 집합을 반환한다.
 ```
 
 ---
 
 ## **Union-Find 예시**
+
 ```
 # 아래와 같이 원소들이 있고,
 { 1 }   { 2 }   { 3 }   { 4 }   { 5 }   { 6 }
@@ -37,6 +39,7 @@ tags: [algorithm, union, find, union-find]
 ---
 
 ## **Union-Find 구현**
+
 ```
 # 초기화, Union, Find 3가지로 구분된다.
 ```
@@ -75,6 +78,7 @@ int find(int x) {
     }
 }
 ```
+
 ```c++
 //  Union
 //  각 원소가 속한 root 값을 찾는다.
@@ -124,6 +128,7 @@ void union(int x, int y) {
 }
 
 ```
+
 ```c++
 //  트리에 속한 노드의 수 구하기
 int nodeCount[MAX_SIZE];
@@ -135,7 +140,7 @@ int union(int x, int y) {
     int xRoot, yRoot;
     xRoot = find(x);
     yRoot = find(y);
-    
+
     root[yRoot] = xRoot;
     nodeCount[xRoot] += nodeCount[yRoot];
     nodeCount[yRoot] = 1;
@@ -146,7 +151,8 @@ int union(int x, int y) {
 
 ---
 
-### ***References***
+### **_References_**
+
 ```
 # http://bowbowbow.tistory.com/26
 # https://twpower.github.io/115-union-find-disjoint-set

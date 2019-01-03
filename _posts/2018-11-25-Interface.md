@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Interface (작성중)"
-author: "Jaeik Lee"
+title: '[Java] Interface (작성중)'
+author: 'Jaeik Lee'
 categories: [java]
 tags: [interface, standard, independent, java, strategy, pattern, design patter]
 ---
@@ -11,6 +11,7 @@ tags: [interface, standard, independent, java, strategy, pattern, design patter]
 ---
 
 ## **Interface 란?**
+
 ```
 # interface는 일종의 추상클래스 ( 여러 클래스가 공통의 기능을 가질 수 있도록 제약 해 놓은 것 )
 ```
@@ -18,6 +19,7 @@ tags: [interface, standard, independent, java, strategy, pattern, design patter]
 ---
 
 ## **interface 사용 이유(예제)**
+
 ```
 1. 개발시간을 단축시킬 수 있다. ( +표준화 가능, +독립적인 프로그래밍 가능 )
 2. 서로 관계없는 클래스들에게 관계를 맺어줄 수 있다.
@@ -32,6 +34,7 @@ tags: [interface, standard, independent, java, strategy, pattern, design patter]
 # 따라서, interface는 표준이 될 수 있기 때문에 호출하는 쪽과 호출받는 쪽이 독립적인 프로그래밍이 가능하다.
 # 이는 결과적으로 개발시간을 단축시킬 수 있는 장점이다.
 ```
+
 ```java
 //  개발시간을 단축시킬 수 있다. ( +표준화 가능, +독립적인 프로그래밍 가능 )
 
@@ -60,6 +63,7 @@ public class StringComp {
     }
 }
 ```
+
 ```
 ## 서로 관계없는 클래스들에게 관계를 맺어줄 수 있다. ##
 
@@ -82,6 +86,7 @@ public class StringComp {
 
 # 위의 2가지 문제를 해결할 수 있는 방법이 interface 구현
 ```
+
 ```java
 public interface Moveable {
     //  건물을 올린다.
@@ -113,6 +118,7 @@ public class Barrack extends Building implements Moveable {
     public void land() { ... }
 }
 ```
+
 ```
 ## Strategy Pattern ( 전략 패턴 ) ##
 # 각각의 알고리즘들이 교환 가능하도록 별도로 정의하고, 각각 캡슐화하여 교환하며 사용하는 패턴
@@ -137,6 +143,7 @@ public class Barrack extends Building implements Moveable {
 # Client는 다양한 전략 중에 적합한 전략을 생성해 Context에게 전략 객체를 주입한다.
 --> "중대장은 총, 칼, 수류탄 중에 적합한 무기를 생성해 군인에게 지급한다."라고 보면 된다.
 ```
+
 ```java
 //  strategy pattern
 
@@ -178,13 +185,13 @@ public class Solider {
 public class Captain {
     public void doStrategy() {
         Strategy st = null;
-        
+
         //  전략을 사용할 Context 생성
         //  solider는 strategy instance를 parameter로 받는다.
         Solider solider = new Solider();
 
         //  전략 선택
-        //  1. 다수가 뭉쳐 있을 때, 
+        //  1. 다수가 뭉쳐 있을 때,
         st = new Grenada();
         solider.run(st);
 
@@ -210,7 +217,8 @@ public class Captain {
 
 ---
 
-### ***References***
+### **_References_**
+
 ```
 # http://limkydev.tistory.com/84
 # http://myeonguni.tistory.com/57
