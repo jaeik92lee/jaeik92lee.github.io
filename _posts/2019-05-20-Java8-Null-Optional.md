@@ -2,7 +2,7 @@
 layout: post
 title: '[Java8] Optinal instead of Null'
 author: 'Jaeik Lee'
-categories: [java, java8]
+categories: [java8]
 tags: [optional, 'null', java, java8]
 ---
 
@@ -128,8 +128,8 @@ def carInsuranceName = person?.car?.insuracne?.name
 # Person class의 car, Car class의 Insurance는 있을수도 없을수도 있으니 Optional로 정의한다.
 # Insurance class의 name은 무조건 있다고 가정하고, String으로 정의한다.
 # 아래와 같이 정의함으로써, "사람은 차를 소유했을 수도, 아닐수도", "자동차는 보험에 가입되어 있을수도 아닐수도" 있음을 명확히 설명한다.
-
 # 또한, 보험회사의 이름은 String으로 선언되어 있기 때문에, 보험회사는 무조건 이름을 가져야 함을 보여준다.
+
 # 보험회사의 이름을 참조할 때 NullPointerException이 발생할 수도 있다. 하지만, null인지 확인하는 코드를 추가할 필요는 없다.
 # 왜? 오히려 문제를 감추는 꼴. 이름이 없는 보험회사를 발견했다면, 이름이 없는 이유를 밝혀서 해결해야 한다.
 ```
