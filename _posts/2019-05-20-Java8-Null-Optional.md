@@ -12,13 +12,15 @@ tags: [optional, 'null', java, java8]
 
 ## **_10.1. 값이 없는 상황을 어떻게 처리할까?_**
 
-```java
-- 1. sample코드를 바탕으로 작성한 2. find problem에서 코드의 문제점은 어떤 것일까?
-- 차를 소유하지 않은 사람이 getCar()를 호출하면? return null
-- 그럼, getInsurance()는 null의 보험 정보를 반환하려 하기 때문에 NullPointerException이 발생
-- 결과적으로 프로그램 실행이 중단된다.
-- 추가적으로 Person이 null인 경우와 getInsurance가 null을 반환할 때도 똑같은 에러가 발생한다.
+```
+# 1. sample코드를 바탕으로 작성한 2. find problem에서 코드의 문제점은 어떤 것일까?
+# 차를 소유하지 않은 사람이 getCar()를 호출하면? return null
+# 그럼, getInsurance()는 null의 보험 정보를 반환하려 하기 때문에 NullPointerException이 발생
+# 결과적으로 프로그램 실행이 중단된다.
+# 추가적으로 Person이 null인 경우와 getInsurance가 null을 반환할 때도 똑같은 에러가 발생한다.
+```
 
+```java
 //  1. sample
 public class Person {
     private Car car;
@@ -42,12 +44,18 @@ public String getCarInsuranceName(Person person) {
 
 ```
 
-```java
-- 2의 문제를 해결하기 위해 아래와 같이 해결할 수 있다.
-- 3번의 경우는 null인지 의심되는 코드를 접근할 때마다 중첩된 if가 추가되기 때문에 들여쓰기 수준이 증가한다.
-- 이와 같은 반복 패턴 코드를 '깊은 의심(deep doubt)'라고 부른다.
-- 아래의 단점은 가독성 저하, 코드의 구조 파괴
+```
+# 2의 문제를 해결하기 위해 아래와 같이 해결할 수 있다.
+# 3번의 경우는 null인지 의심되는 코드를 접근할 때마다 중첩된 if가 추가되기 때문에 들여쓰기 수준이 증가한다.
+# 이와 같은 반복 패턴 코드를 '깊은 의심(deep doubt)'라고 부른다.
+# 아래의 단점은 가독성 저하, 코드의 구조 파괴
 
+# 4번은 3번의 문제를 해결한 것이다.
+# 중첩 if 블록을 없앴다.
+# 아래의 코드도 4개의 출구가 생겼기 때문에 유지보수가 어려워진다.
+```
+
+```java
 //  3. resolve problem - 1
 public String getCarInsuranceName(Person person) {
     if(person != null) {
@@ -61,10 +69,6 @@ public String getCarInsuranceName(Person person) {
     }
     return "Unknown";
 }
-
-- 4번은 3번의 문제를 해결한 것이다.
-- 중첩 if 블록을 없앴다.
-- 아래의 코드도 4개의 출구가 생겼기 때문에 유지보수가 어려워진다.
 
 //  4. resolve problem - 2
 public String getCarInsuracneName(Person person) {
@@ -105,8 +109,8 @@ public String getCarInsuracneName(Person person) {
 ## **_10.1.3 다른 언어는 null 대신 무얼 사용하나?_**
 
 ```groovy
-- 그루비는 안전 내비게이션 연산자(?.) 도입
-- 아래는 person, car, insurance, name 중 null값이 있으면 null을 반환한다.
+# 그루비는 안전 내비게이션 연산자(?.) 도입
+# 아래는 person, car, insurance, name 중 null값이 있으면 null을 반환한다.
 
 def carInsuranceName = person?.car?.insuracne?.name
 ```
@@ -115,19 +119,22 @@ def carInsuranceName = person?.car?.insuracne?.name
 
 ## **_10.2 Optional 클래스_**
 
+```
+# java8은 "선택형값" 개념의 영향으로 java.util.Optional<T>라는 새로운 클래스를 제공한다. (하스켈과 스칼라의 영향이라고 한다.)
+# Optional의 역할은 더 이해하기 쉬운 API를 설계하도록 돕는 것이다.
+# Optional class는 값이 있으면 감싸고, 값이 없으면 Optional.empty 메서드를 반환
+
+# null vs Optional.empty()
+# Person class의 car, Car class의 Insurance는 있을수도 없을수도 있으니 Optional로 정의한다.
+# Insurance class의 name은 무조건 있다고 가정하고, String으로 정의한다.
+# 아래와 같이 정의함으로써, "사람은 차를 소유했을 수도, 아닐수도", "자동차는 보험에 가입되어 있을수도 아닐수도" 있음을 명확히 설명한다.
+
+# 또한, 보험회사의 이름은 String으로 선언되어 있기 때문에, 보험회사는 무조건 이름을 가져야 함을 보여준다.
+# 보험회사의 이름을 참조할 때 NullPointerException이 발생할 수도 있다. 하지만, null인지 확인하는 코드를 추가할 필요는 없다.
+# 왜? 오히려 문제를 감추는 꼴. 이름이 없는 보험회사를 발견했다면, 이름이 없는 이유를 밝혀서 해결해야 한다.
+```
+
 ```java
-- java8은 "선택형값" 개념의 영향으로 java.util.Optional<T>라는 새로운 클래스를 제공한다. (하스켈과 스칼라의 영향이라고 한다.)
-- Optional의 역할은 더 이해하기 쉬운 API를 설계하도록 돕는 것이다.
-- Optional class는 값이 있으면 감싸고, 값이 없으면 Optional.empty 메서드를 반환
-
-- null vs Optional.empty()
-- Person class의 car, Car class의 Insurance는 있을수도 없을수도 있으니 Optional로 정의한다.
-- Insurance class의 name은 무조건 있다고 가정하고, String으로 정의한다.
-- 아래와 같이 정의함으로써, "사람은 차를 소유했을 수도, 아닐수도", "자동차는 보험에 가입되어 있을수도 아닐수도" 있음을 명확히 설명한다.
-
-- 또한, 보험회사의 이름은 String으로 선언되어 있기 때문에, 보험회사는 무조건 이름을 가져야 함을 보여준다.
-- 보험회사의 이름을 참조할 때 NullPointerException이 발생할 수도 있다. 하지만, null인지 확인하는 코드를 추가할 필요는 없다.
-- 왜? 오히려 문제를 감추는 꼴. 이름이 없는 보험회사를 발견했다면, 이름이 없는 이유를 밝혀서 해결해야 한다.
 public class Person {
     private Optional<Car> car;
     public Optional<Car> getCar() { return car; }
