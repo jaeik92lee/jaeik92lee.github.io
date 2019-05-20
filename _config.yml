@@ -15,7 +15,7 @@ author:
 # Build settings
 markdown:       kramdown
 include:
-  - _pages
+- _pages
 
 # Assets
 sass:
@@ -24,10 +24,10 @@ sass:
 
 # Gems
 plugins:
-  - jekyll-feed
-  - jekyll-paginate
-  - jekyll-seo-tag
-  # - jemoji #Uncomment this to allow emoji in your post
+- jekyll-feed
+- jekyll-paginate
+- jekyll-seo-tag
+# - jemoji #Uncomment this to allow emoji in your post
 
 # Permalinks
 permalink:      /:year-:month-:day/:title
@@ -44,6 +44,6 @@ permalink:    /:year-:month-:day/:title
 paginate:     5
 
 plugins:
-  - jekyll-paginate
-  - jekyll-remote-theme
+- jekyll-paginate
+- jekyll-remote-theme
   
