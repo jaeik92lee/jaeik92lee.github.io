@@ -233,9 +233,10 @@ log.info("[ Optional ] : {}", getCarInsuranceName(person)); //  Unknown
 
 Optional<Person> person = Optional.empty();
 log.info("[ Optional ] : {}", getCarInsuranceName(person)); //  Unknown
+```
 
-
-//  test - 1
+```java
+//  test
 Insurance insurance = new Insurance();
 insurance.setName("TEST_INSURANCE");
 
@@ -248,19 +249,28 @@ Optional<Car> optCar = Optional.ofNullable(car);
 
 Person person = new Person();
 person.setCar(optCar);
+```
 
+```java
+//  TEST 1
 Optional<Person> optPerson = Optional.ofNullable(person);
 log.info("[ Optional ] : {}", getCarInsuranceName(optPerson));  //  TEST_INSURANCE
+```
 
-//  test - 2
+```java
+//  TEST 2
 Optional<Insurance> optInsurance = Optional.ofNullable(null);
 log.info("[ Optional ] : {}", getCarInsuranceName(optPerson));  //  Unknown
+```
 
-//  test - 3
+```java
+//  TEST 3
 Optional<Car> optCar = Optional.ofNullable(null);
 log.info("[ Optional ] : {}", getCarInsuranceName(optPerson));  //  Unknown
+```
 
-//  test - 4
+```java
+//  TEST 4
 Optional<Person> optPerson = Optional.ofNullable(null);
 log.info("[ Optional ] : {}", getCarInsuranceName(optPerson));  //  Unknown
 ```
@@ -280,17 +290,73 @@ public class Person {
 
 ## **_10.3.4 디폴트 액션과 Optional 언랩_**
 
+```java
+# get() : 값을 읽는 가장 간단한 메소드. 동시에 가장 안전하지 않은 메서드. 맵핑된 값이 없으면 NoSuchElementException.
+# orEles() : 값이 포함되지 않을 때 디폴트 값을 제공할 수 있다.
+# orElseGet() : 비어있는 경우만 호출된다. ( 이해 못했음 )
+# orElseThrow() : 비어있는 경우 예외를 던진다. 예외를 선택할 수 있음.
+# ifPresent() : 값이 존재할 때 인수로 넘겨준 동작을 실행할 수 있다.
+
+//  example
+optionalPerson.ifPresent(person -> {
+    //  logic
+});
+```
+
+---
+
 ## **_10.3.5 두 Optional 합치기_**
 
-## **_10.3.6 필터로 특정값 자르기_**
+```java
+//  Person, Car 정보를 이용해 가장 저렴한 보험료 제공하는 보험회사 찾기
+//  잘못된 Optional 사용법
+public Optional<Insurance> nullSafeFindCheapestInsurance(Optional<Person> optPerson, Optional<Car> optCar) {
+    if(optPerson.isPresent() && optCar.isPresent()) {
+        return Optional.of(findCeapstInsurance(optPerson.get(), optCar.get()));
+    } else {
+        return Optional.empty();
+    }
+}
 
-## **_10.4 Optional을 사용한 실용 예제_**
+//  올바른 Optional 사용법
+public Optional<Insurcane> nullSafeFindCheapestInsurance(Optional<Person> optPerson, Optional<Car> optCar) {
+    return optPerson.flatMap(person -> optCar.map(car ->  findCheapestInsurance(person, car)));
+}
+```
 
-## **_10.4.1 잠재적으로 null이 될 수 있는 대상을 Optional로 감싸기_**
+## **_10.3.6 필터로 특정값 거르기_**
 
-## **_10.4.2 예외와 Optional_**
+```java
+//  보험회사 이름이 'CambridgeInsuracne'인지 확인 해보기
+//  안전하게 수행 하려면 Insurance객체가 null인지부터 확인
+//  기존의 로직
+Insurance insurance = ...;
+if(insurance != null && "CambridgeInsurance".equals(insuarnce.getName())) {
+    ...
+}
 
-## **_10.4.3 응용_**
+//  개선된 로직
+//  값을 가지고 일치하는 값을 가지면 그 값을 반환, 아니면 empty 반환
+//  Optional이 비어있으면 filter는 동작하지 않는다.
+Optional<Insurance> optInsurance = ...;
+optInsurance.filter(insurance -> "CambridgeInsuarnce".equals(insurance.getName()))
+.ifPresent(result -> ...);
+
+//  Quiz
+//  Person/Car/Insurance 모델을 이용하여 getCarInsuranceName 메소드 작성
+//  getCarInsuranceName 메소드는 minAge이상의 나이일 때만 보험회사 이름을 반환
+public String getCarInsuranceName(Optional<Person> optPerson, int minAge) {
+    return optPerson.filter(person -> person.getAge() > minAge)
+                    .flatMap(Person::getCar)
+                    .flatMap(Car::getInsurance)
+                    .map(Insurance::getName)
+                    .orElse("Unknown");
+}
+
+//  Person.age = 10,    minAge : 5  --> Insurance Name
+//  Person.age = 5,     minAge : 10 --> Unknwon
+//  Person.age = null,  minAge : 10 --> Unknown
+```
 
 ---
 
